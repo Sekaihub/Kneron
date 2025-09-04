@@ -1,0 +1,37 @@
+/* SPDX-License-Identifier: GPL-2.0+ */
+/*
+ * Copyright (C) 2012  VATICS Inc.
+ *
+ */
+
+#ifndef _MAPS_H__
+#define _MAPS_H__
+
+/* AXI Bus slaves */
+#define LEIPZIG_EQOSC_MMR_BASE			0xC4000000
+#define LEIPZIG_DDRNSDMC_MMR_BASE		0xC8000000
+#define LEIPZIG_DDRNSDMC_MCTL_BASE		0xCB000000
+#define LEIPZIG_DDRNSDMC_APM_BASE		0xCB900000
+#define LEIPZIG_DDRNSDMC_PUB_BASE		0xCC000000
+#define LEIPZIG_DDRSDMC_0_MMR_BASE		LEIPZIG_DDRNSDMC_MMR_BASE
+
+/* APB slaves */
+#define LEIPZIG_UARTC_0_MMR_BASE		0xC5600000
+#define LEIPZIG_UARTC_1_MMR_BASE		0xC5700000
+
+#define LEIPZIG_SYSC_MMR_BASE			0xCEF00000
+
+/*
+ *-----------------------------
+ * Device Base Unified MACROs
+ *-----------------------------
+ */
+
+/* AXI slaves */
+#define VPL_EQOSC_MMR_BASE			LEIPZIG_EQOSC_MMR_BASE
+#define VPL_DDRSDMC_0_MMR_BASE			LEIPZIG_DDRNSDMC_MMR_BASE
+#define VPL_UARTC0_MMR_BASE			LEIPZIG_UARTC_0_MMR_BASE
+#define VPL_UARTC1_MMR_BASE			LEIPZIG_UARTC_1_MMR_BASE
+#define VPL_SYSC_MMR_BASE			LEIPZIG_SYSC_MMR_BASE
+
+#endif

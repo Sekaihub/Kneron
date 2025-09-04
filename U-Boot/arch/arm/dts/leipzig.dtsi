@@ -1,0 +1,291 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2021 VATICS Inc.
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+#include "leipzig-clk.dtsi"
+
+/ {
+	compatible = "leipzig";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	custom_config: config {
+	};
+
+	aliases {
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
+		serial4 = &uart4;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "vatics,leipzig-smp";
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x0>;
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x1>;
+		};
+
+		cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x2>;
+		};
+
+		cpu@3 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x3>;
+		};
+	};
+
+	sysctrl: sysctrl@cef00000 {
+		compatible = "syscon";
+		reg = <0xcef00000 0x1000>;
+	};
+
+	pinctrl: pinctrl{
+		compatible = "vatics,leipzig-pinctrl";
+		regmap = <&sysctrl>;
+	};
+
+	pdma: pdma@c5000000 {
+		compatible = "vatics,pdma";
+		reg = <0xc5000000 0x1000>;
+		status = "okay";
+		/* interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>; */
+		interrupt-names = "vpl_pdma_irq";
+		/* dma-cell [Channel], [Slave], [Swap_Data] */
+		#dma-cells = <3>;
+	};
+
+	gpio0: vpl_gpio@ce200000 {
+		compatible = "vatics,vpl-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		reg = <0xce200000 0x1000>;
+		/*interrupts = <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;*/
+		clocks = <&gpio_0_clk>;
+		gpio-ranges = <&pinctrl 0 0 32>;
+		status = "disabled";
+	};
+
+	gpio1: vpl_gpio@ce300000 {
+		compatible = "vatics,vpl-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		reg = <0xce300000 0x1000>;
+		/*interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;*/
+		clocks = <&gpio_1_clk>;
+		gpio-ranges = <&pinctrl 0 32 32>;
+		status = "disabled";
+	};
+
+	gpio2: vpl_gpio@ce400000 {
+		compatible = "vatics,vpl-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		reg = <0xce400000 0x1000>;
+		/*interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;*/
+		clocks = <&gpio_2_clk>;
+		gpio-ranges = <&pinctrl 0 64 32>;
+		status = "disabled";
+	};
+
+	usb2_phy: usb2phy@cba00000 {
+		compatible = "vatics,leipzig-usb2-phy";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0xcba00000 0x1000>;
+		regmap = <&sysctrl>;
+		#phy-cells = <0>;
+		status = "disabled";
+	};
+
+	usb3_phy: usb3phy@cbb00000 {
+		compatible = "vatics,leipzig-usb3-phy";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0xcbb00000 0x1000>;
+		regmap = <&sysctrl>;
+		#phy-cells = <0>;
+		status = "disabled";
+	};
+
+	usbdrd3_0: usb@c4100000 {
+		compatible = "vatics,leipzig-dwc3";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		status = "disabled";
+
+		usbdrd_dwc3_0: usb@c4100000 {
+			compatible = "snps,dwc3";
+			reg = <0xc4100000 0x100000>;
+			maximum-speed = "super-speed";
+			dr_mode = "host";
+			phys = <&usb3_phy>;
+			phy-names = "usb3-phy";
+			phy_type = "utmi";
+			status = "disabled";
+			snps,dis_enblslpm_quirk;
+			snps,usb2-gadget-lpm-disable;
+			snps,dis_u2_susphy_quirk;
+			snps,dis_u3_susphy_quirk;
+		};
+	};
+
+	/* usb2.0 only */
+	usbdrd3_1: usb@c4200000 {
+		compatible = "vatics,leipzig-dwc3";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		status = "disabled";
+
+		usbdrd_dwc3_1: usb@c4200000 {
+			compatible = "snps,dwc3";
+			reg = <0xc4200000 0x100000>;
+			maximum-speed = "high-speed";
+			dr_mode = "otg";
+			phys = <&usb2_phy>;
+			phy-names = "usb2-phy";
+			phy_type = "utmi";
+			status = "disabled";
+		};
+	};
+
+	spi0: spi@c5200000 {
+		compatible = "snps,dw-apb-ssi";
+		reg = <0xc5200000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&ssic_0_clk>;
+		spi-max-frequency = <100000000>;
+		num-cs = <1>;
+		status = "disabled";
+		dmas = <&pdma 0 0 1>, <&pdma 1 0 1>;
+		dma-names = "rx", "tx";
+	};
+
+	spi1: spi@c5300000 {
+		compatible = "snps,dw-apb-ssi";
+		reg = <0xc5300000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&ssic_1_clk>;
+		spi-max-frequency = <100000000>;
+		num-cs = <1>;
+		status = "disabled";
+		dmas = <&pdma 2 0 0>, <&pdma 3 0 0>;
+		dma-names = "rx", "tx";
+	};
+
+	eqos: ethernet@c4000000 {
+		compatible = "vatics,leipzig-eqos";
+		reg = <0xc4000000 0xfffff>;
+		phy-mode = "rmii";
+		max-speed = <100>;
+		status = "disabled";
+	};
+
+	i2c0: i2c@ce500000 {
+		compatible = "snps,designware-i2c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0xce500000 0x1000>;
+		clocks = <&i2c_0_clk>;
+	};
+
+	i2c1: i2c@ce600000 {
+		compatible = "snps,designware-i2c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0xce600000 0x1000>;
+		clocks = <&i2c_1_clk>;
+	};
+
+	i2c2: i2c@ce700000 {
+		compatible = "snps,designware-i2c";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0xce700000 0x1000>;
+		clocks = <&i2c_2_clk>;
+	};
+
+	wdt: watchdog@ceb00000 {
+		compatible = "vatics,vpl-wdt";
+		reg = <0xceb00000 0x20>;
+		clocks = <&wdt_clk>;
+	};
+
+	wdt-reboot {
+		compatible = "wdt-reboot";
+		wdt = <&wdt>;
+	};
+	mmc0: mshc@c6100000 {
+	       compatible = "vatics,sdhci";
+	       reg = <0xc6100000 0xfffff>;
+	       status = "disabled";
+	};
+
+	mmc1: mshc@c6200000 {
+		non-removable;
+		compatible = "vatics,sdhci";
+		reg = <0xc6200000 0xfffff>;
+		status = "disabled";
+	};
+
+	uart0: serial@c5600000 {
+		compatible = "ns16550a";
+		reg = <0xc5600004 0x40>;
+		reg-shift = <2>;
+		status = "disabled";
+	};
+
+	uart1: serial@c5700000 {
+		compatible = "ns16550a";
+		reg = <0xc5700004 0x40>;
+		reg-shift = <2>;
+		status = "disabled";
+	};
+
+	uart2: serial@c5800000 {
+		compatible = "ns16550a";
+		reg = <0xc5800004 0x40>;
+		reg-shift = <2>;
+		status = "disabled";
+	};
+
+	uart3: serial@c5900000 {
+		compatible = "ns16550a";
+		reg = <0xc5900004 0x40>;
+		reg-shift = <2>;
+		status = "disabled";
+	};
+
+	uart4: serial@c5A00000 {
+		compatible = "ns16550a";
+		reg = <0xc5A00004 0x40>;
+		reg-shift = <2>;
+		status = "disabled";
+	};
+};

@@ -1,0 +1,18 @@
+if VATICS_LEIPZIG
+
+config SYS_BOARD
+	default "leipzig"
+
+config SYS_VENDOR
+        default "vatics"
+
+config SYS_CONFIG_NAME
+        string "Board configuration name"
+        default "vatics_leipzig"
+        help
+          This option contains information about board configuration name.
+          Based on this option include/configs/<CONFIG_SYS_CONFIG_NAME>.h header
+          will be used for board configuration.
+
+endif
+

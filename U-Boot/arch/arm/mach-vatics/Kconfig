@@ -1,0 +1,17 @@
+if ARCH_VATICS
+
+
+
+config VATICS_LEIPZIG
+	bool "Support VATICS Leipzig"
+	select ARM64
+	help
+	  The VATICS Leipzig is a ARM-based SoC Cortex-A55 including NEON
+	  and video codec support.
+
+
+
+
+source "arch/arm/mach-vatics/leipzig/Kconfig"
+
+endif

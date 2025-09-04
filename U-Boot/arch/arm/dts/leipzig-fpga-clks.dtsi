@@ -1,0 +1,167 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2023 VATICS Inc.
+ */
+
+/ {
+	fpga_uart_0_clk: fpga_uart_0_clk@8M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <8000000>;
+		clock-output-name = "fpga_uart_0_clk";
+	};
+
+	fpga_i2c_0_clk: fpga_i2c_0_clk@8M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <8000000>;
+		clock-output-name = "fpga_i2c_0_clk";
+	};
+
+	fpga_gpio_0_clk: fpga_gpio_0_clk@8M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <8000000>;
+		clock-output-name = "fpga_gpio_0_clk";
+	};
+
+	fpga_agpo_0_clk: fpga_agpo_0_clk@8M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <8000000>;
+		clock-output-name = "fpga_agpo_0_clk";
+	};
+
+	fpga_dmac_0_clk: fpga_dmac_0_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "fpga_dmac_0_clk";
+	};
+
+	fpga_voc_0_clk: fpga_voc_0_clk@13M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <13500000>;
+		clock-output-name = "fpga_voc_0_clk";
+	};
+
+	fpga_mmc_0_clk: fpga_mmc_0_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "fpga_mmc_0_clk";
+	};
+
+	fpga_eqosc_clk: fpga_eqosc_clk@25M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <25000000>;
+		clock-output-name = "fpga_eqosc_clk";
+	};
+
+	fpga_ssic_0_clk: fpga_ssic_0_clk@25M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <25000000>;
+		clock-output-name = "fpga_ssic_0_clk";
+	};
+
+	fpga_vq7_clk: fpga_vq7_clk@40M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <40000000>;
+		clock-output-name = "fpga_vq7_clk";
+	};
+
+	fpga_kdpu_clk: fpga_kdpu_clk@40M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <40000000>;
+		clock-output-name = "fpga_kdpu_clk";
+	};
+
+	fpga_kdpu_apb_clk: fpga_kdpu_apb_clk@16M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <16000000>;
+		clock-output-name = "fpga_kdpu_apb_clk";
+	};
+
+	fpga_ispe_icache_clk: fpga_ispe_icahce_clk@50M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <50000000>;
+		clock-output-name = "fpga_ispe_icache_clk";
+	};
+
+	fpga_ispe_icore_clk: fpga_ispe_icore_clk@40M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <40000000>;
+		clock-output-name = "fpga_ispe_icore_clk";
+	};
+
+	fpga_ifpe_clk: fpga_ifpe_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "fpga_ifpe_clk";
+	};
+
+	fpga_cdce_vce_clk: fpga_cdce_vce_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "fpga_cdce_vce_clk";
+	};
+
+	fpga_cdce_bpu_clk: fpga_cdce_bpu_clk@20M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <20000000>;
+		clock-output-name = "fpga_cdce_bpu_clk";
+	};
+
+	fpga_jdbe_clk: fpga_jdbe_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "fpga_jdbe_clk";
+	};
+
+	fpga_jebe_clk: fpga_jebe_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "fpga_jebe_clk";
+	};
+
+	fpga_usb20c_clk: fpga_usb20c_clk@60M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <60000000>;
+		clock-output-name = "fpga_usb20c_clk";
+	};
+
+	fpga_tmrc_clk: fpga_tmrc_clk@8M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <8000000>;
+		clock-output-name = "fpga_tmrc_clk";
+	};
+
+	fpga_wdt_clk: fpga_wdt_clk@8M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <8000000>;
+		clock-output-name = "fpga_wdt_clk";
+	};
+
+	fpga_ie0_clk: fpga_ie0_clk@80M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <80000000>;
+		clock-output-name = "fpga_ie0_clk";
+	};
+};

@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: GPL-2.0
+
+if VATICS_LEIPZIG
+
+choice
+        prompt "Leipzig board select"
+	optional
+
+config TARGET_LEIPZIG_FPGA
+        bool "Leipzig FPGA"
+        help
+          Leipzig FPGA is a FPGA board for VATICS Leipzig,
+          with full function and phisical connectors support like
+          usb2.0 host ports, MAC, SDcard, HDMI, VIC, VOC ....
+
+config TARGET_LEIPZIG_EVM
+        bool "Leipzig EVM board"
+        help
+          Leipzig EVM is a evaluation board for VATICS Leipzig,
+          with full function and phisical connectors support like
+          usb2.0 host ports, MAC, SDcard, HDMI, VIC, VOC ....
+
+endchoice
+
+config SYS_SOC
+	default "leipzig"
+
+source "board/vatics/leipzig/Kconfig"
+
+endif

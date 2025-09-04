@@ -1,0 +1,199 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2021 VATICS Inc.
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+#include "leipzig-fpga-clks.dtsi"
+
+/ {
+	compatible = "vatics,leipzig";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		serial0 = &uart0;
+	};
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "vatics,leipzig-smp";
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x0>;
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x1>;
+		};
+
+		cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x2>;
+		};
+
+		cpu@3 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x3>;
+		};
+	};
+
+	sysctrl: sysctrl@cef00000 {
+		compatible = "syscon";
+		reg = <0xcef00000 0x1000>;
+	};
+
+	pinctrl: pinctrl{
+		compatible = "vatics,leipzig-pinctrl";
+		regmap = <&sysctrl>;
+	};
+
+	pdma: pdma@c5000000 {
+		compatible = "vatics,pdma";
+		reg = <0xc5000000 0x1000>;
+		status = "okay";
+		/* interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>; */
+		interrupt-names = "vpl_pdma_irq";
+		/* dma-cell [Channel], [Slave], [Swap_Data] */
+		#dma-cells = <3>;
+	};
+
+	gpio0: vpl_gpio@ce200000 {
+		compatible = "vatics,vpl-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		reg = <0xce200000 0x1000>;
+		/*interrupts = <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;*/
+		clocks = <&fpga_gpio_0_clk>;
+		gpio-ranges = <&pinctrl 0 0 32>;
+		status = "disabled";
+	};
+
+	gpio1: vpl_gpio@ce300000 {
+		compatible = "vatics,vpl-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		reg = <0xce300000 0x1000>;
+		/*interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;*/
+		clocks = <&fpga_gpio_0_clk>;
+		gpio-ranges = <&pinctrl 0 32 32>;
+		status = "disabled";
+	};
+
+	gpio2: vpl_gpio@ce400000 {
+		compatible = "vatics,vpl-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		reg = <0xce400000 0x1000>;
+		/*interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;*/
+		clocks = <&fpga_gpio_0_clk>;
+		gpio-ranges = <&pinctrl 0 64 32>;
+		status = "disabled";
+	};
+
+	usb2_phy: usb2phy@cba00000 {
+		compatible = "vatics,leipzig-usb2-phy";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0xcba00000 0x1000>;
+		#phy-cells = <0>;
+		status = "disabled";
+	};
+
+	usb3_phy: usb3phy@cbb00000 {
+		compatible = "vatics,leipzig-usb3-phy";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0xcbb00000 0x1000>;
+		#phy-cells = <0>;
+		status = "disabled";
+	};
+
+	usbdrd3_0: usb@c4100000 {
+		compatible = "vatics,leipzig-dwc3";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		status = "disabled";
+
+		usbdrd_dwc3_0: usb@c4100000 {
+			compatible = "snps,dwc3";
+			reg = <0xc4100000 0x100000>;
+			maximum-speed = "super-speed";
+			dr_mode = "host";
+			phys = <&usb3_phy>;
+			phy-names = "usb3-phy";
+			phy_type = "utmi";
+			status = "disabled";
+		};
+	};
+
+	/* usb2.0 only */
+	usbdrd3_1: usb@c4200000 {
+		compatible = "vatics,leipzig-dwc3";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		status = "disabled";
+
+		usbdrd_dwc3_1: usb@c4200000 {
+			compatible = "snps,dwc3";
+			reg = <0xc4200000 0x100000>;
+			maximum-speed = "high-speed";
+			dr_mode = "otg";
+			phys = <&usb2_phy>;
+			phy-names = "usb2-phy";
+			phy_type = "utmi";
+			status = "disabled";
+		};
+	};
+
+	spi0: spi@c5200000 {
+		compatible = "snps,dw-apb-ssi";
+		reg = <0xc5200000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&fpga_ssic_0_clk>;
+		num-cs = <1>;
+		status = "disabled";
+		dmas = <&pdma 0 0 0>, <&pdma 1 0 0>;
+		dma-names = "rx", "tx";
+	};
+
+	eqos: ethernet@c4000000 {
+		compatible = "vatics,leipzig-eqos";
+		reg = <0xc4000000 0xfffff>;
+		phy-mode = "mii";
+		max-speed = <100>;
+		status = "disabled";
+	};
+
+	wdt: watchdog@ceb00000 {
+		compatible = "vatics,vpl-wdt";
+		reg = <0xceb00000 0x20>;
+		clocks = <&fpga_wdt_clk>;
+	};
+
+	wdt-reboot {
+		compatible = "wdt-reboot";
+		wdt = <&wdt>;
+	};
+
+	uart0: serial@c5600000 {
+		compatible = "ns16550a";
+		reg = <0xc5600004 0x40>;
+		reg-shift = <2>;
+		status = "disabled";
+	};
+};

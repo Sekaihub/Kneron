@@ -1,0 +1,133 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Copyright (C) 2021 VATICS Inc.
+ */
+
+/dts-v1/;
+#include "leipzig.dtsi"
+#include "leipzig-pinctrl.dtsi"
+
+/ {
+	model = "leipzig";
+	compatible = "leipzig";
+
+};
+
+&custom_config {
+	u-boot,mmc-env-offset = <0x2200000>; /* 34MB, sector 69632 */
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+/* usb 3.0 */
+&usb3_phy {
+	status = "okay";
+};
+
+&usbdrd3_0 {
+	status = "okay";
+};
+
+&usbdrd_dwc3_0 {
+	status = "okay";
+	dr_mode = "peripheral";
+};
+
+/* usb 2.0 only */
+&usb2_phy {
+	status = "okay";
+};
+
+&usbdrd3_1 {
+	status = "okay";
+};
+
+&usbdrd_dwc3_1 {
+	status = "okay";
+	dr_mode = "host";
+};
+
+&spi0 {
+	status = "okay";
+	rx-sample-delay-ns = <10>;
+	cs-gpios = <&gpio1 29 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&ssic0_quad_pins>;
+	spi-nand@0 {
+		compatible = "spi-nand";
+		spi-rx-bus-width = <2>;
+		spi-tx-bus-width = <2>;
+		spi-max-frequency = <100000000>;
+		reg = <0>;
+		spi-cpol;
+		spi-cpha;
+	};
+};
+
+&spi1 {
+	status = "okay";
+	rx-sample-delay-ns = <0>;
+	cs-gpios = <&gpio2 1 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&ssic1_pins>;
+	spi-nor@0 {
+		compatible = "jedec,spi-nor";
+		spi-max-frequency = <25000000>;
+		reg = <0>;
+		spi-cpol;
+		spi-cpha;
+	};
+};
+
+&eqos {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&eqosc_pins>;
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_pins>;
+};
+
+&i2c1 {
+	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_p1_pins>;
+};
+
+&i2c2 {
+	status = "disabled";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_p1_pins>;
+};
+
+&mmc0 {
+	status = "okay";
+	phy-clkdl = <0>;
+};
+
+&mmc1 {
+	status = "okay";
+	phy-clkdl = <0>;
+};
+
+&uart0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_p0_s0_pins>;
+};

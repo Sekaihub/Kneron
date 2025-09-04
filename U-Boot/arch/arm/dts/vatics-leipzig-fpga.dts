@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Copyright (C) 2021 VATICS Inc.
+ */
+
+/dts-v1/;
+#include "vatics-leipzig.dtsi"
+#include "vatics-leipzig-pinctrl.dtsi"
+
+/ {
+	model = "FPGA";
+	compatible = "vatics,leipzig";
+
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+&usb3_phy {
+	status = "disabled";
+};
+
+&usb2_phy {
+	status = "disabled";
+};
+
+&usbdrd3_0 {
+	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&usb30_pins>;
+};
+
+&usbdrd3_1 {
+	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&usb20_pins>;
+};
+
+&spi0 {
+	status = "okay";
+	cs-gpios = <&gpio1 29 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&ssic0_ma_pins>;
+	spi-nor@0 {
+		compatible = "jedec,spi-nor";
+		spi-max-frequency = <50000000>;
+		reg = <0>;
+		spi-cpol;
+		spi-cpha;
+	};
+};
+
+&eqos {
+	status = "okay";
+	phy-mode = "rmii";
+	/*mac-address = [02 03 04 05 06 07];*/
+	max-speed = <100>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&eqosc_pins>;
+};
+
+&uart0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_p0_s0_pins>;
+};

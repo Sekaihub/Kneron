@@ -1,0 +1,173 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2023 VATICS Inc.
+ */
+
+/ {
+	uart_0_clk: uart_0_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "uart_0_clk";
+	};
+
+	uart_1_clk: uart_1_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "uart_1_clk";
+	};
+
+	uart_2_clk: uart_2_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "uart_2_clk";
+	};
+
+	uart_3_clk: uart_3_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "uart_3_clk";
+	};
+
+	uart_4_clk: uart_4_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "uart_4_clk";
+	};
+
+	i2c_0_clk: i2c_0_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "i2c_0_clk";
+	};
+
+	i2c_1_clk: i2c_1_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "i2c_1_clk";
+	};
+
+	i2c_2_clk: i2c_2_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "i2c_2_clk";
+	};
+
+	gpio_0_clk: gpio_0_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "gpio_0_clk";
+	};
+
+	gpio_1_clk: gpio_1_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "gpio_1_clk";
+	};
+
+	gpio_2_clk: gpio_2_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "gpio_2_clk";
+	};
+
+	agpo_0_clk: agpo_0_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "agpo_0_clk";
+	};
+
+	dmac_0_clk: dmac_0_clk@666M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <666000000>;
+		clock-output-name = "dmac_0_clk";
+	};
+
+	dmac_1_clk: dmac_1_clk@666M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <666000000>;
+		clock-output-name = "dmac_1_clk";
+	};
+
+	voc_0_clk: voc_0_clk@13M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <13500000>;
+		clock-output-name = "voc_0_clk";
+	};
+
+	mmc_0_clk: mmc_0_clk@26M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-name = "mmc_0_clk";
+	};
+
+	eqosc_clk: eqosc_clk@25M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <25000000>;
+		clock-output-name = "eqosc_clk";
+	};
+
+	ssic_0_clk: ssic_0_clk@400M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <400000000>;
+		clock-output-name = "ssic_0_clk";
+	};
+
+	ssic_1_clk: ssic_1_clk@400M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <400000000>;
+		clock-output-name = "ssic_1_clk";
+	};
+	ssic_2_clk: ssic_2_clk@400M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <400000000>;
+		clock-output-name = "ssic_2_clk";
+	};
+	ssic_3_clk: ssic_3_clk@400M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <400000000>;
+		clock-output-name = "ssic_3_clk";
+	};
+
+
+	usb20c_clk: usb20c_clk@60M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <60000000>;
+		clock-output-name = "usb20c_clk";
+	};
+
+	tmrc_clk: tmrc_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "tmrc_clk";
+	};
+
+	wdt_clk: wdt_clk@200M {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+		clock-output-name = "wdt_clk";
+	};
+};
