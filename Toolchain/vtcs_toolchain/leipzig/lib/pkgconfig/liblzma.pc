@@ -1,0 +1,19 @@
+#
+# Author: Lasse Collin
+#
+# This file has been put into the public domain.
+# You can do whatever you want with this file.
+#
+
+prefix=/opt/vtcs_toolchain/leipzig
+exec_prefix=/opt/vtcs_toolchain/leipzig
+libdir=/opt/vtcs_toolchain/leipzig/lib
+includedir=/opt/vtcs_toolchain/leipzig/include
+
+Name: liblzma
+Description: General purpose data compression library
+URL: https://tukaani.org/xz/
+Version: 5.2.10
+Cflags: -I${includedir}
+Libs: -L${libdir} -llzma
+Libs.private: -pthread -lpthread

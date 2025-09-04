@@ -1,0 +1,2 @@
+add-auto-load-safe-path /opt/vtcs_toolchain/leipzig//aarch64-buildroot-linux-gnu/sysroot
+set sysroot /opt/vtcs_toolchain/leipzig//aarch64-buildroot-linux-gnu/sysroot

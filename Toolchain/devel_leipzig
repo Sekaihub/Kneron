@@ -1,0 +1,16 @@
+##### Linux Kbuild #####
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-
+
+
+##### VATICS Stuff #####
+export PROJECT=leipzig
+export PLATFORMNAME=${PROJECT}
+export TOOLSDIR=/opt/vtcs_toolchain/leipzig/usr/bin
+#export PATH=${PREFIX}/bin:/usr/local/bin:${PATH}:${TOOLSDIR}
+export PATH=${TOOLSDIR}:${PREFIX}/bin:/usr/local/bin:${PATH}
+export KERNELINC=/home/vtcs/leipzig/Kernel/include
+export KERNELSRC=/home/vtcs/leipzig/Kernel
+#export TARGET=arm-linux
+#Intentionally empty to avoid plus sign in Kernel version
+export LOCALVERSION=
