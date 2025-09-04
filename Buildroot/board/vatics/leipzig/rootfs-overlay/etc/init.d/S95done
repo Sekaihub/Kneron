@@ -1,0 +1,12 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		if [ -f "/mnt/flash/etc/rc.local" ]; then
+			sh /mnt/flash/etc/rc.local
+		fi
+	;;
+	stop)
+	;;
+esac
+
