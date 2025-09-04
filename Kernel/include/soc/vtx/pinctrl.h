@@ -1,0 +1,113 @@
+/* SPDX-License-Identifier: GPL-2.0+ */
+/*
+ * Copyright (C) 2012  VATICS Inc.
+ *
+ */
+
+#ifndef __VPL_PINCTRL_H__
+#define __VPL_PINCTRL_H__
+
+/* PAD control in sysc */
+#define SYSC_PAD_NUM			9
+#define SYSC_PAD_STS_0			0x78
+#define SYSC_PAD_STS_1			0x7C
+#define SYSC_PAD_STS_2			0x80
+#define SYSC_PAD_STS_3			0x84
+#define SYSC_PAD_STS_4			0x88
+#define SYSC_PAD_STS_5			0x8C
+#define SYSC_PAD_STS_6			0x90
+#define SYSC_PAD_STS_7			0x94
+#define SYSC_PAD_STS_8			0x98
+#define SYSC_PAD_EN_0			0x1E0
+#define SYSC_PAD_CLR_0			0x1E4
+#define SYSC_PAD_EN_1			0x1E8
+#define SYSC_PAD_CLR_1			0x1EC
+#define SYSC_PAD_EN_2			0x1F0
+#define SYSC_PAD_CLR_2			0x1F4
+#define SYSC_PAD_EN_3			0x1F8
+#define SYSC_PAD_CLR_3			0x1FC
+#define SYSC_PAD_EN_4			0x200
+#define SYSC_PAD_CLR_4			0x204
+#define SYSC_PAD_EN_5			0x208
+#define SYSC_PAD_CLR_5			0x20C
+#define SYSC_PAD_EN_6			0x210
+#define SYSC_PAD_CLR_6			0x214
+#define SYSC_PAD_EN_7			0x218
+#define SYSC_PAD_CLR_7			0x21C
+#define SYSC_PAD_EN_8			0x220
+#define SYSC_PAD_CLR_8			0x224
+#define SYSC_INPUT_SMIT			0xEC
+#define SYSC_INPUT_PU			0xF0
+#define SYSC_OUTPUT_PU			0xF4
+#define SYSC_OUTPUT_DRV                 0xF8
+#define SYSC_OUTPUT_SLEW		0xFC
+#define SYSC_INOUT_SMIT_0		0x100
+#define SYSC_INOUT_SMIT_1		0x104
+#define SYSC_INOUT_SMIT_2		0x108
+#define SYSC_INOUT_PU_0			0x10C
+#define SYSC_INOUT_PU_1			0x110
+#define SYSC_INOUT_PU_2			0x114
+#define SYSC_INOUT_PU_3			0x118
+#define SYSC_INOUT_PU_4			0x11C
+#define SYSC_INOUT_PU_5			0x120
+#define SYSC_INOUT_DRV_0		0x124
+#define SYSC_INOUT_DRV_1		0x128
+#define SYSC_INOUT_DRV_2		0x12C
+#define SYSC_INOUT_DRV_3		0x130
+#define SYSC_INOUT_DRV_4		0x134
+#define SYSC_INOUT_DRV_5		0x138
+#define SYSC_INOUT_SLEW_0		0x13C
+#define SYSC_INOUT_SLEW_1		0x140
+#define SYSC_INOUT_SLEW_2		0x144
+
+#define VPL_PIN_STATUS_NUM		28	 /* 0x88 ~ 0xF4 */
+#define VPL_PIN_FIRST			SYSC_SCHMITT
+
+#define VPL_PAD_NUM                     SYSC_PAD_NUM
+#define VPL_PAD_GPIO                    SYSC_PAD_0
+#define VPL_PAD_GPIO_NUM                3
+
+#define VPL_PAD_STS_0			SYSC_PAD_STS_0
+#define VPL_PAD_STS_1			SYSC_PAD_STS_1
+#define VPL_PAD_STS_2			SYSC_PAD_STS_2
+#define VPL_PAD_STS_3			SYSC_PAD_STS_3
+#define VPL_PAD_STS_4			SYSC_PAD_STS_4
+#define VPL_PAD_STS_5			SYSC_PAD_STS_5
+#define VPL_PAD_STS_6			SYSC_PAD_STS_6
+#define VPL_PAD_STS_7			SYSC_PAD_STS_7
+#define VPL_PAD_STS_8			SYSC_PAD_STS_8
+#define VPL_PAD_EN_0			SYSC_PAD_EN_0
+#define VPL_PAD_CLR_0                   SYSC_PAD_CLR_0
+#define VPL_PAD_EN_1			SYSC_PAD_EN_1
+#define VPL_PAD_EN_2			SYSC_PAD_EN_2
+#define VPL_PAD_EN_3			SYSC_PAD_EN_3
+#define VPL_PAD_EN_4			SYSC_PAD_EN_4
+#define VPL_PAD_EN_5			SYSC_PAD_EN_5
+#define VPL_PAD_EN_6			SYSC_PAD_EN_6
+#define VPL_PAD_EN_7			SYSC_PAD_EN_7
+#define VPL_PAD_EN_8			SYSC_PAD_EN_8
+#define VPL_INPUT_SMIT			SYSC_INPUT_SMIT
+#define VPL_INPUT_PU			SYSC_INPUT_PU
+#define VPL_OUTPUT_PU			SYSC_OUTPUT_PU
+#define VPL_OUTPUT_DRV			SYSC_OUTPUT_DRV
+#define VPL_OUTPUT_SLEW			SYSC_OUTPUT_SLEW
+#define VPL_INOUT_SMIT_0		SYSC_INOUT_SMIT_0
+#define VPL_INOUT_SMIT_1		SYSC_INOUT_SMIT_1
+#define VPL_INOUT_SMIT_2		SYSC_INOUT_SMIT_2
+#define VPL_INOUT_PU_0			SYSC_INOUT_PU_0
+#define VPL_INOUT_PU_1			SYSC_INOUT_PU_1
+#define VPL_INOUT_PU_2			SYSC_INOUT_PU_2
+#define VPL_INOUT_PU_3			SYSC_INOUT_PU_3
+#define VPL_INOUT_PU_4			SYSC_INOUT_PU_4
+#define VPL_INOUT_PU_5			SYSC_INOUT_PU_5
+#define VPL_INOUT_DRV_0			SYSC_INOUT_DRV_0
+#define VPL_INOUT_DRV_1			SYSC_INOUT_DRV_1
+#define VPL_INOUT_DRV_2			SYSC_INOUT_DRV_2
+#define VPL_INOUT_DRV_3			SYSC_INOUT_DRV_3
+#define VPL_INOUT_DRV_4			SYSC_INOUT_DRV_4
+#define VPL_INOUT_DRV_5			SYSC_INOUT_DRV_5
+#define VPL_INOUT_SLEW_0		SYSC_INOUT_SLEW_0
+#define VPL_INOUT_SLEW_1		SYSC_INOUT_SLEW_1
+#define VPL_INOUT_SLEW_2		SYSC_INOUT_SLEW_2
+
+#endif /* ___VPL_PINCTRL_H */

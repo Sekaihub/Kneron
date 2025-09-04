@@ -1,0 +1,362 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ *
+ * Copyright (C) 2023 VATICS Inc.
+ *
+ */
+
+/* Input port used by sensor, DVP0=0, DVP1=1, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7, MIPI2=8, MIPI3=9
+ * e.g. data_io_num = <4>;
+ */
+
+/* sensor FrameSync mode. Disable=0, ONE_SYNC=1, CONTINUOUS_SYNC=2
+ * e.g. frame_sync_mode = <0>;
+ */
+
+/* sensor I/O voltage level, 3300000, 2500000, 1800000
+ * e.g. io_voltage = <1800000>;
+ */
+
+/* sensor ref. clock , unit is HZ
+ * e.g. ref_clock_hz = <74250000>;
+ */
+
+/* gpio number used for sensor hw reset. (0xFFF : Ignore)
+ * e.g. reset_gpio_num = <0xFFF>;
+ */
+
+/* gpio number used for sensor standby. (0xFFF : Ignore)
+ * e.g. standby_gpio_num = <0xFFF>;
+ */
+
+/* sensor i2c id select (8 bit).
+ * e.g. i2c_addr = <0x34>;
+ */
+
+/* agpo or gpio number used for sensor frame sync. (0xFFF : Ignore)
+ * e.g. reset_gpio_num = <0xFFF>;
+ */
+
+/* mipi data rate per lane, unit is bps.
+ * e.g. mipi_data_rate = <2376000000>;
+ */
+
+/* mipi lane number, 1 or 2 or 4 or 8.
+ * e.g. serial_lane_num = <4>;
+ */
+
+&soc{
+	AR0521_0:AR0521@0 {
+		compatible = "vatics,ar0521";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x20>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	OS05A10_0:OS05A10@0 {
+		compatible = "vatics,os05a10";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x6C>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		serial_lane_num = <4>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	OS08A10_0:OS08A10@0 {
+		compatible = "vatics,os08a10";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x6C>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	OV5675_0:OV5675@0 {
+		compatible = "vatics,ov5675";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x6C>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX715_0:IMX715@0 {
+		compatible = "vatics,imx715";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x34>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		hdr_mode = <2>;
+		min_hsync_adjust_enable = <0>;
+		serial_lane_num = <4>;
+		mipi_data_rate = <2376000000>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	VB56G4A_0:VB56G4A@0 {
+		compatible = "vatics,vb56g4a";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		ref_clock_hz = <12000000>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		sensor_i2c_addr = <0x20>;
+		io_voltage = <1800000>;
+		ser_des_enable = <0>;
+		DS90UB953_i2c_addr = <0x30>;
+		DS90UB954_i2c_addr = <0x60>;
+		des_reset_gpio_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX678_0:IMX678@0 {
+		compatible = "kneron,imx678";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x34>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		hdr_mode = <1>;
+		min_hsync_adjust_enable = <0>;
+		direct_gain_enable = <1>;
+		serial_lane_num = <4>;
+		mipi_data_rate = <2079000000>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX676_0:IMX676@0 {
+		compatible = "kneron,imx676";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x34>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		hdr_mode = <1>;
+		min_hsync_adjust_enable = <0>;
+		serial_lane_num = <4>;
+		mipi_data_rate = <2376000000>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	AR0822_0:AR0822@0 {
+		compatible = "vatics,ar0822";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x20>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	AR2020_0:AR2020@0 {
+		compatible = "kneron,ar2020";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x6C>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		hdr_mode = <0>;
+		roi_mode_en = <0>;
+		scale_en = <0>;
+		scale_ratio = <75>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX662_0:IMX662@0 {
+		compatible = "vatics,imx662";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x34>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		hdr_mode = <1>;
+		direct_gain_enable = <0>;
+		serial_lane_num = <4>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX327_0:IMX327@0 {
+		compatible = "vatics,imx327";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x34>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		serial_lane_num = <4>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX675_0:IMX675@0 {
+		compatible = "vatics,imx675";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x34>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		hdr_mode = <1>;
+		serial_lane_num = <4>;
+		mipi_data_rate = <1440000000>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	TP2855_0:TP2855@0 {
+		compatible = "vatics,tp2855";
+		data_io_num = <4>;
+		ref_clock_from_soc = <0>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x88>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	AR0820_0:AR0820@0 {
+		compatible = "vatics,ar0820";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x20>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	GC2053_0:GC2053@0 {
+		compatible = "vatics,gc2053";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x6E>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IRS2976C_0:IRS2976C@0 {
+		compatible = "kneron,irs2976c";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x7A>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+	IMX219_0:IMX219@0 {
+		compatible = "kneron,imx219";
+		data_io_num = <4>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x20>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+};

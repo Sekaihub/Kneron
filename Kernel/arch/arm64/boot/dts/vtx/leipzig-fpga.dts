@@ -1,0 +1,187 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ *
+ * Copyright (C) 2023 VATICS Inc.
+ *
+ */
+/dts-v1/;
+
+#include "leipzig-fpga.dtsi"
+#include "leipzig-fpga-pinctrl.dtsi"
+#include "leipzig_parallel_sensor.dtsi"
+
+/ {
+	soc {
+		eqos: dweqos@c4000000 {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&eqosc_pins>;
+		};
+
+		nand: nand@bc100000 {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			status = "disable";
+			compatible = "evatronix,nandflash-ctrl";
+			reg = <0xbc100000 0x2000>;
+			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+			timings = <0x0c140e33 0x00000404 0x00000023 0x00150000 0x00000000 0x00000005 0x00000015>;
+			nand-ecc-mode = "hw";
+			nand-on-flash-bbt;
+			nand-ecc-strength = <8>;
+			nand-ecc-step-size = <512>;
+
+			device_type = "mtd";
+			partition@0 {
+				label = "nand-bootldr";
+				reg = <0x00000000 0x08000000>;
+				#reg = <0x015E0000 0x06a20000>;
+			};
+			partition@1 {
+				label = "nand-env";
+				reg = <0x00140000 0x00a00000>;
+			};
+			partition@2 {
+				label = "nand-kernel";
+				reg = <0x001e0000 0x00400000>;
+			};
+			partition@3 {
+				label = "nand-rootfs";
+				reg = <0x005e0000 0x01000000>;
+			};
+			partition@4 {
+				label = "nand-ubifs";
+				reg = <0x015e0000 0x06a20000>;
+			};
+		};
+	};
+};
+
+&spi0 {
+	status = "okay";
+	rx-sample-delay-ns = <10>;
+	spi_nor@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <50000000>;
+		m25p,fast-read;
+		spi-cpha;
+		spi-cpol;
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			partition@0 {
+				label = "U-Boot";
+				reg = <0x00000000 0x00140000>;
+			};
+			partition@1 {
+				label = "env";
+				reg = <0x00140000 0x00040000>;
+			};
+			partition@2 {
+				label = "dtb";
+				reg = <0x00180000 0x00010000>;
+			};
+			partition@3 {
+				label = "Kernel";
+				reg = <0x00190000 0x002e0000>;
+			};
+			partition@4 {
+				label = "Rootfs";
+				reg = <0x00470000 0x00470000>;
+			};
+			partition@5 {
+				label = "Jffs2";
+				reg = <0x008e0000 0x00720000>;
+			};
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_p0_s0_pins>;
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_pins>;
+	giu:giu@2e{
+		compatible = "vpl,giuliani";
+		reg = <0x2e>;
+	};
+
+	adv7513@39 {
+		compatible = "adi,adv7513";
+		reg = <0x39>;
+	};
+};
+
+&i2c1 {
+	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_p1_pins>;
+};
+
+&i2c2 {
+	status = "disable";
+	clock-frequency = <100000>;
+};
+
+/*
+ * &mmc0 {
+ *	status = "okay";
+ *	pinctrl-names = "default";
+ *	pinctrl-0 = <&mshc_pins>;
+ *};
+ */
+/*
+ * &mmc1 {
+ *	status = "okay";
+ *	pinctrl-names = "default";
+ *	pinctrl-0 = <&mshc_pins>;
+ * };
+ */
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+&voc0 {
+	status = "okay";
+};
+
+&voc1 {
+	status = "okay";
+};
+
+&vic {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&vic0_pins>;
+};
+/*
+ * &usb {
+ *	status = "okay";
+ *	dr_mode = "dual";
+ * };
+ *
+ * &usbphy {
+ *	status = "okay";
+ * };
+ */

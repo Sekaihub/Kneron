@@ -1,0 +1,315 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * DTS file for Leipzig FPGA Pinctrl setting
+ *
+ * Copyright (C) 2022-2025 VATICS Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/ {
+	pinctrl: leipzig-pinctrl {
+		compatible = "vatics,leipzig-pinctrl";
+		sysc-regmap = <&sysctrl>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&state_default>;
+		state_default: pinmuxing {
+			monitor_clk_pins: monitor_clk {
+				function = "clk";
+				groups = "monitor_clk";
+			};
+
+			ca55u_dbg_pins: ca55u {
+				function = "dbg";
+				groups = "ca55u_dbg";
+			};
+
+			scrtu_dbg_pins: scrtu {
+				function = "dbg";
+				groups = "scrtu_dbg";
+			};
+
+		};
+
+		usb30c_dbg_pins: usb30c {
+			function = "dbg";
+			groups = "usb30c_dbg";
+		};
+
+		vq7u_dbg_pins: vq7u {
+			function = "dbg";
+			groups = "vq7u_dbg";
+		};
+
+		ssic3_pins: ssic3 {
+			function = "ssic";
+			groups = "ssic3_sgl_ma";
+		};
+
+		ssic2_pins: ssic2 {
+			function = "ssic";
+			groups = "ssic2_sgl_ma";
+		};
+
+		ssic1_pins: ssic1 {
+			function = "ssic";
+			groups = "ssic1_sgl_ma";
+		};
+
+		ssic0_sla_pins: ssic0_sla {
+			function = "ssic";
+			groups = "ssic0_sgl_sla";
+		};
+
+		ssic0_ma_pins: ssic0_ma {
+			function = "ssic";
+			groups = "ssic0_sgl_ma";
+		};
+
+		ssic0_quad_pins: ssic0_quad {
+			function = "ssic";
+			groups = "ssic0_quad_ma";
+		};
+
+		mshc_pins: mshc {
+			function = "mshc";
+			groups = "mshc";
+		};
+
+		irdac_pins: irdac {
+			function = "irdac";
+			groups = "irdac";
+		};
+
+		/* I2S bus - Tx & Rx */
+		i2s_master_pins: i2s_master {
+			function = "i2s";
+			groups = "i2ssc_tx_ma", "i2ssc_rx_ma",
+				"i2ssc_ma_clk";
+		};
+
+		i2s_slave_pins: i2s_slave {
+			function = "i2s";
+			groups = "i2ssc_tx_sla", "i2ssc_rx_sla",
+				"i2ssc_ma_clk";
+		};
+
+		/* I2S Tx bus */
+		i2s_tx_master_pins: i2s_tx_master {
+			function = "i2s";
+			groups = "i2ssc_tx_ma", "i2ssc_ma_clk";
+		};
+
+		i2s_tx_slave_pins: i2s_tx_slave {
+			function = "i2s";
+			groups = "i2ssc_tx_sla", "i2ssc_ma_clk";
+		};
+
+		/* ADCD Digital Microphone */
+		adcd_pdm_pins: adcd_pdm {
+			function = "adcdc";
+			groups = "adcdcc";
+		};
+
+		/* I2C bus */
+		i2c2_p1_pins: i2c2_p1 {
+			function = "i2c";
+			groups = "i2cc2_pos1";
+		};
+
+		i2c2_p1_gpio_pins: i2c2_p1_gpio {
+			function = "gpio0";
+			groups = "gpio0_data15", "gpio0_data16";
+		};
+
+		i2c2_p0_pins: i2c2_p0 {
+			function = "i2c";
+			groups = "i2cc2_pos0";
+		};
+
+		i2c2_p0_gpio_pins: i2c2_p0_gpio {
+			function = "gpio0";
+			groups = "gpio0_data17", "gpio0_data18";
+		};
+
+		i2c1_p1_pins: i2c1_p1 {
+			function = "i2c";
+			groups = "i2cc1_pos1";
+		};
+
+		i2c1_p1_gpio_pins: i2c1_p1_gpio {
+			function = "gpio2";
+			groups = "gpio2_data30", "gpio2_data31";
+		};
+
+		i2c1_p0_pins: i2c1_p0 {
+			function = "i2c";
+			groups = "i2cc1_pos0";
+		};
+
+		i2c1_p0_gpio_pins: i2c1_p0_gpio {
+			function = "gpio2";
+			groups = "gpio2_data13", "gpio2_data14";
+		};
+
+		i2c0_pins: i2c0 {
+			function = "i2c";
+			groups = "i2cc0";
+		};
+
+		i2c0_gpio_pins: i2c0_gpio {
+			function = "gpio2";
+			groups = "gpio2_data5", "gpio2_data6";
+		};
+
+		eqosc_pins: eqosc {
+			function = "eqosc";
+			groups = "eqosc_sec0", "eqosc_sec1",
+				"eqosc_sec2", "eqosc_sec3",
+				"eqosc_tx_in_clk", "eqosc_rx_clk";
+		};
+
+		ddrnsdmc_pins: ddrnsdmc {
+			function = "drrnsdmc";
+			groups = "ddrnsdmc_test";
+		};
+
+		adcdc_pins: adcdc {
+			function = "adcdc";
+			groups = "adcdcc";
+		};
+
+		usb30_pins: usb30 {
+			function = "usbc";
+			/* groups = "usb30c_vbus_oc", "usb30c_drv_vbus"; */
+			groups = "usb30c_drv_vbus";
+		};
+
+		usb20_pins: usb20 {
+			function = "usbc";
+			/* groups = "usb20c_vbus_oc", "usb20c_drv_vbus"; */
+			groups = "usb20c_drv_vbus";
+		};
+
+		uart4_p0_pins: uart4_p0 {
+			function = "uart";
+			groups = "uart4_pos0";
+		};
+
+		uart4_p1_pins: uart4_p1 {
+			function = "uart";
+			groups = "uart4_pos1";
+		};
+
+		uart4_p2_pins: uart4_p2 {
+			function = "uart";
+			groups = "uart4_pos2";
+		};
+
+		uart3_p0_pins: uart3_p0 {
+			function = "uart";
+			groups = "uart3_pos0";
+		};
+
+		uart3_p1_pins: uart3_p1 {
+			function = "uart";
+			groups = "uart3_pos1";
+		};
+
+		uart3_p2_pins: uart3_p2 {
+			function = "uart";
+			groups = "uart3_pos2";
+		};
+
+		uart2_p0_pins: uart2_p0 {
+			function = "uart";
+			groups = "uart2_pos0";
+		};
+
+		uart2_p1_pins: uart2_p1 {
+			function = "uart";
+			groups = "uart2_pos1";
+		};
+
+		uart2_p2_pins: uart2_p2 {
+			function = "uart";
+			groups = "uart2_pos2";
+		};
+
+		uart1_p0_s0_pins: uart1_p0_s0 {
+			function = "uart";
+			groups = "uart1_pos0_sec0";
+		};
+
+		uart1_p1_s0_pins: uart1_p1_s0 {
+			function = "uart";
+			groups = "uart1_pos1_sec0";
+		};
+
+		uart1_p2_s0_pins: uart1_p2_s0 {
+			function = "uart";
+			groups = "uart1_pos2_sec0";
+		};
+
+		uart0_p0_s0_pins: uart0_p0_s0 {
+			function = "uart";
+			groups = "uart0_pos0_sec0";
+		};
+
+		uart0_p1_s0_pins: uart0_p1_s0 {
+			function = "uart";
+			groups = "uart0_pos1_sec0";
+		};
+
+		uart0_p2_s0_pins: uart0_p2_s0 {
+			function = "uart";
+			groups = "uart0_pos2_sec0";
+		};
+
+		vic0_pins: vic0 {
+			mux {
+				function = "vic";
+				groups = "vic0_sec0", "vic0_sec1", "vic0_sec2",
+					"vic0_sec3", "vic0_sec4",
+					"vic_ref_clk";
+			};
+		};
+
+		vic1_pins: vic1 {
+			mux {
+				function = "vic";
+				groups = "vic1_sec0", "vic1_sec1", "vic1_sec2",
+					"vic1_sec3", "vic1_sec4", "vic1_sec5",
+					"vic_ref_sync", "vic_ref_clk";
+			};
+		};
+
+		voc1_pins: voc1 {
+			mux {
+				function = "voc";
+				groups = "voc1_sec0", "voc1_sec1", "voc1_sec2_po0",
+					"voc1_sec3_po0", "voc1_sec4", "voc1_sec5",
+					"voc1_sec6", "voc1_sec7_pos1", "voc1_clk_pos1";
+				/*
+				 * drive-strength = <8>;
+				 * slew-rate-enable;
+				 * input-schmitt-enable;
+				 */
+			};
+			/*
+			 * conf-clk {
+			 *	pins = "INOUT_85";
+			 *	bias-pull-down;
+			 * };
+			 */
+		};
+	};
+};

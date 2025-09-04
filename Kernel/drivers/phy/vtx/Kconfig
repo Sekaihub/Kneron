@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Phy drivers for Vatics platforms
+#
+
+
+config PHY_VATICS_LEIPZIG_USB3
+	tristate "VATICS Leipzig USB3 PHY Driver"
+	depends on USB_SUPPORT
+	select GENERIC_PHY
+	select USB_PHY
+	help
+	  Enable this to support the Leipzig USB3 PHY.
+
+config PHY_VATICS_LEIPZIG_USB2
+	tristate "VATICS Leipzig USB2 PHY Driver"
+	depends on USB_SUPPORT
+	select GENERIC_PHY
+	select USB_PHY
+	help
+	  Enable this to support the Leipzig USB2 PHY.

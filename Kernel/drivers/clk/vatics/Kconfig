@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-2.0
+# common clock support for VATICS SoC family.
+
+config COMMON_CLK_VATICS
+	bool "VATICS clock controller common support"
+	depends on ARCH_LEIPZIG
+	default ARCH_LEIPZIG
+	help
+	  Say y here to enable common clock controller for Vatics platforms.
+
+if COMMON_CLK_VATICS
+config CLK_LEIPZIG
+	bool "VATICS Leipzig clock controller support"
+	depends on ARM64 || COMPILE_TEST
+	default ARCH_LEIPZIG
+	help
+	  Build the driver for Leipzig Clock Driver.
+
+endif

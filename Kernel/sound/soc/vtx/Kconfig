@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: GPL-2.0
+
+menuconfig SND_SOC_VTX
+	tristate "SoC Audio for the VATICS chip"
+	depends on ARCH_VIENNA || ARCH_LEIPZIG
+	default y
+	help
+	  Say Y or M if you want to add support for codecs attached to
+	  the VPL I2S interface. You will also need to select the
+	  audio interfaces to support below.
+
+	  It was first developed on the LEIPZIG platform.
+
+######################################################
+# VTX Sound SoC Audio
+######################################################
+
+if SND_SOC_VTX
+
+######################################################
+# Audio Codec Driver
+######################################################
+
+config SND_SOC_VTX_CODEC_INTERNAL_INNO
+	tristate
+	depends on ARCH_LEIPZIG
+
+config SND_SOC_VTX_CODEC_SSM2603
+	tristate
+
+######################################################
+# SoC Machine Driver
+######################################################
+
+## comment "Machine Drivers Selection:"
+
+comment "Use Internal Codec only"
+
+config SND_SOC_VTX_MACH_INTERNAL_INNO
+	tristate "INNOSILICON"
+	depends on ARCH_LEIPZIG
+	select SND_SOC_VTX_CODEC_INTERNAL_INNO
+	default y
+	help
+	  Say Y or M if you want to add support
+	  INNOSILICON
+	  on VTX EVM platforms.
+
+comment "Use External Codec(s) only"
+
+config SND_SOC_VTX_MACH_SSM2603
+	tristate "AD SSM2603"
+	select SND_SOC_VTX_CODEC_SSM2603
+	help
+	  Say Y or M if you want to add support
+	  Analog Devices SSM2603
+	  on VTX EVM platforms.
+
+comment "Both use internal and external codecs"
+
+config SND_SOC_VTX_MACH_INTERNAL_SSM2603
+	tristate "INNOSILICON and AD SSM2603"
+	depends on ARCH_LEIPZIG
+	select SND_SOC_VTX_CODEC_INTERNAL_INNO
+	select SND_SOC_VTX_CODEC_SSM2603
+	help
+	  This adds support for
+	  INNOSILICON and Analog Devices SSM2603
+	  on VTX EVM platforms.
+
+	  To compile this driver as a module, choose M here.
+
+endif # if SND_SOC_VTX
+

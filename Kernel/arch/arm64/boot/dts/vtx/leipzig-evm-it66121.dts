@@ -1,0 +1,325 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ *
+ * Copyright (C) 2023 VATICS Inc.
+ *
+ */
+/dts-v1/;
+
+/* reserved memory definitions */
+#define SECURE_MEM_BASE 4000000
+#define SECURE_MEM_SIZE 0x1000000
+#define VQ7_MEM_BASE 5000000
+#define VQ7_MEM_SIZE 0x1FFF000
+#define VQ7_LOG_MEM_BASE 6FFF000
+#define VQ7_LOG_MEM_SIZE 0x1000
+#define RTOS_MEM_BASE 7000000
+#define RTOS_MEM_SIZE 0x400000
+#define EDMC_MEM_BASE D400000
+#define EDMC_MEM_SIZE 0x32C00000
+
+#include "leipzig.dtsi"
+#include "leipzig-evm-pinctrl.dtsi"
+#include "leipzig_parallel_sensor.dtsi"
+#include "leipzig_mipi_sensor.dtsi"
+
+/ {
+	soc {
+		eqos: dweqos@c4000000 {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&eqosc_pins>;
+		};
+	};
+};
+
+&pinctrl {
+
+	state_default: pinmuxing {
+		scrtu_dbg_pins: scrtu {
+			/delete-property/ function;
+			/delete-property/ groups;
+		};
+	};
+
+	eqosc_pins: eqosc {
+		function = "eqosc";
+		groups = "eqosc_sec0", "eqosc_sec1",
+			 "eqosc_tx_out_clk";
+	};
+
+	voc1_pins: voc1 {
+		mux {
+			function = "voc";
+			groups = "voc1_sec1", "voc1_sec5", "voc1_sec6",
+				 "voc1_clk_pos1";
+			drive-strength = <12>;
+		};
+	};
+};
+
+&spi0 {
+	status = "okay";
+	rx-sample-delay-ns = <10>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&ssic0_quad_pins>;
+	/delete-property/ cs-gpios;
+	spi_nand@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "spi-nand";
+		spi-tx-bus-width = <2>;
+		spi-rx-bus-width = <2>;
+		reg = <0>;
+		spi-max-frequency = <100000000>;
+		m25p,fast-read;
+		spi-cpha;
+		spi-cpol;
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			/*BL2 + BL31*/
+			partition@0 {
+				label = "BLX";
+				reg = <0x00000000 0x00140000>;
+			};
+			partition@1 {
+				label = "env";
+				reg = <0x00140000 0x00080000>;
+			};
+			partition@2 {
+				label = "dtb";
+				reg = <0x001C0000 0x00080000>;
+			};
+			partition@3 {
+				label = "Kernel";
+				reg = <0x00340000 0x01280000>;
+			};
+			partition@4 {
+				label = "Rootfs";
+				reg = <0x01DC0000 0x01800000>;
+			};
+			partition@5 {
+				label = "Ubifs";
+				reg = <0x035C0000 0x0CA40000>;
+			};
+			partition@6 {
+				label = "U-Boot";
+				reg = <0x00240000 0x00100000>;
+			};
+			partition@7 {
+				label = "OP-TEE";
+				reg = <0x015C0000 0x00800000>;
+			};
+		};
+	};
+};
+
+&spi1 {
+	status = "okay";
+	rx-sample-delay-ns = <10>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&ssic1_pins>;
+	/delete-property/ cs-gpios;
+	spi_nor@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <50000000>;
+		m25p,fast-read;
+		spi-cpha;
+		spi-cpol;
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			partition@0 {
+				label = "U-Boot";
+				reg = <0x00000000 0x00140000>;
+			};
+			partition@1 {
+				label = "env";
+				reg = <0x00140000 0x00040000>;
+			};
+			partition@2 {
+				label = "dtb";
+				reg = <0x00180000 0x00010000>;
+			};
+			partition@3 {
+				label = "Kernel";
+				reg = <0x00190000 0x002e0000>;
+			};
+			partition@4 {
+				label = "Rootfs";
+				reg = <0x00470000 0x00470000>;
+			};
+			partition@5 {
+				label = "Jffs2";
+				reg = <0x008e0000 0x00720000>;
+			};
+		};
+	};
+};
+
+&sound {
+	status = "okay";
+	/* Pin Control */
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2s_slave_pins>;
+	//pinctrl-0 = <&i2s_master_pins>;
+	//pinctrl-0 = <&i2s_tx_slave_pins>, <&adcd_pdm_pins>;
+	//pinctrl-0 = <&i2s_tx_master_pins>, <&adcd_pdm_pins>;
+	/* Codec Application Combination */
+	/* (I) Use internal codec only */
+	compatible = "vtx,evm-machine";
+	/* (II) Use external codec only */
+	//compatible = "vtx,evm-ssm2603-machine"; /* SSM2603 */
+	/* (III) Both use internal and external codecs */
+	//compatible = "vtx,evm-inno-ssm2603-machine"; /* INNOSILICON and SSM2603 */
+};
+
+&inno_acdc {
+	status = "okay";
+	/* Digital Microphone */
+	//adcdcc-pdm;
+	//pdm-gain = <3>;
+};
+
+&uart0 {
+	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_p0_s0_pins>;
+};
+
+&uart3 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart3_p2_pins>;
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_pins>;
+	/* HDMI Transmitter device: AD ADV7513 */
+	adv7513@39 {
+		compatible = "adi,adv7513";
+		reg = <0x39>;
+	};
+	/* Audio Codec device: AD SSM2603 */
+	ssm2603@1a {
+		status = "okay";
+		compatible = "wlf,ssm2603";
+		reg = <0x1a>;
+	};
+	it66232@4c {
+		status = "okay";
+		compatible = "ite,it66121";
+		reg = <0x4c>;
+		offset = <0x88>;
+		input,16bit,embedded-sync;
+	};
+};
+
+&i2c1 {
+	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_p1_pins>;
+};
+
+&i2c2 {
+	status = "disable";
+	clock-frequency = <100000>;
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+&voc0 {
+	status = "okay";
+};
+
+&voc1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&voc1_pins>;
+};
+
+&vic {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&vic0_pins>;
+};
+
+/* usb3 */
+&usbdrd3_0 {
+	status = "okay";
+};
+
+&usbdrd_dwc3_0 {
+	status = "okay";
+};
+
+&usb3_phy {
+	status = "okay";
+};
+
+&usbdrd3_1 {
+	status = "okay";
+};
+
+&usbdrd_dwc3_1 {
+	status = "okay";
+	/* dr_mode = "host"; */
+	dr_mode = "peripheral";
+};
+
+&usb2_phy {
+	status = "okay";
+};
+&mmc0 {
+	status = "okay";
+	//bus-width = <8>;
+	bus-width = <4>;
+	phy-clkdl = <120>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&mshc_pins>;
+};
+
+//&mmc1 {
+//    status = "okay";
+//    phy-clkdl = <120>;
+//};
+
+&io_voltage {
+	status = "okay";
+	/*3300000, 2500000, 1800000*/
+	pd1-default = <3300000>;
+	pd5-default = <1800000>;
+	pd6-default = <3300000>;
+	pd9-default = <3300000>;
+	pd10-default = <3300000>;
+	pd11-default = <3300000>;
+	pd13-default = <3300000>;
+};
+
+&pmu {
+	status = "okay";
+
+	rtc: sgc-rtc@0 {
+		/*alarm = <&gpio2 14 0>;*/
+	};
+};

@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+#
+# VTX SOC drivers
+#
+config VMA_CLASS
+	bool
+	depends on ARCH_LEIPZIG
+
+config VPL_AGPO
+	tristate "VATICS VPL AGPO Support"
+	depends on ARCH_LEIPZIG
+	help
+		This is VATICS AGPOC driver

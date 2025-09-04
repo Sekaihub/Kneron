@@ -1,0 +1,26 @@
+* Leipzig Peripheral DMA controller
+
+Leipzig Peripheral DMA controller
+
+Required properties:
+- compatible: Should be "leipzig-pdma"
+- reg: Should contain DMA registers location and length.
+- interrupts: Should contain the irq for pdma device.
+
+Examples:
+
+/*
+ * Each channel has specific irq
+ * ICU parse out irq channel from ICU register,
+ * while DMA controller may not able to distinguish the irq channel
+ * Using this method, interrupt-parent is required as demuxer
+ */
+pdma: pdma@0xc5000000 {
+	status = "okay";
+	compatible = "leipzig-pdma";
+	reg = <0xc5000000 0x1000>;
+	interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
+	interrupt-names = "vpl_pdma_irq";
+	/* dma-cell [Channel], [Slave], [Swap_Data] */
+	#dma-cells = <3>;
+};

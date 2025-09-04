@@ -1,0 +1,218 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ *
+ * Copyright (C) 2023 VATICS Inc.
+ *
+ */
+&soc {
+AR0234_0:AR0234@0 {
+		compatible = "vatics,ar0234";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <0>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		sensor_i2c_bus_num = <1>;
+		sensor_i2c_addr = <0x30>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+IT6604_1:IT6604@1 {
+		compatible = "vatics,it6604";
+		data_io_num = <0>, <1>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <0>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <2>;
+		i2c_addr = <0x90>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		io_voltage = <3300000>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+JXK03_0:JXK03@0 {
+		compatible = "vatics,jxk03";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x80>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		io_voltage = <3300000>; /*3300000, 2500000, 1800000*/
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+JXK03_1:JXK03@1 {
+		compatible = "vatics,jxk03";
+		data_io_num = <1>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <2>;
+		i2c_addr = <0x80>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		io_voltage = <3300000>; /*3300000, 2500000, 1800000*/
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+K035_0:K035@0 {
+		compatible = "vatics,k035";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		reset_gpio_num = <0xFFF>;
+		spi_bus_num = <3>;
+		io_voltage = <3300000>; /*3300000, 2500000, 1800000*/
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+NullSensor_0:NullSensor@0 {
+		compatible = "vatics,nullsensor";
+		data_io_num = <0>; /*Input port used by sensor, DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <0>; /*Enable SOC PLL clock as sensor input clock, disable=0, enable=1*/
+		reset_gpio_num = <0xFFF>; /*GPIO number used for sensor HW reset. (0xFFF : Ignore)*/
+		standby_gpio_num = <0xFFF>; /*GPIO number used for sensor Power down. (0xFFF : Ignore)*/
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+OX01A10_0:OX01A10@0 {
+		compatible = "vatics,ox01a10";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		sensor_i2c_addr = <0x60>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		ser_des_enable = <1>;
+		DS90UB913_i2c_addr = <0xB0>;
+		DS90UB914_i2c_addr = <0xC0>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+OV5653_0:OV5653@0 {
+		compatible = "vatics,ov5653";
+		data_io_num = <0>;
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x6C>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		sensor_pixel_clock = <96000000>;
+		clocks = <&clks CLK_VIC_O_REF>,
+			 <&clks CLK_VIC_APB>;
+		clock-names = "vic_o_ref_clk",
+			      "vic_apb";
+		sysc-regmap = <&sysctrl>;
+	};
+OV10633_0:OV10633@0 {
+		compatible = "vatics,ov10633";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x60>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+OV9732_0:OV9732@0 {
+		compatible = "vatics,ov9732";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		sensor_i2c_bus_num = <1>;
+		sensor_i2c_addr = <0x6C>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+PS5270_0:PS5270@0 {
+		compatible = "vatics,ps5270";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x90>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+PS5270_1:PS5270@1 {
+		compatible = "vatics,ps5270";
+		data_io_num = <1>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <2>;
+		i2c_addr = <0x90>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+PICO384_0:PICO384@0 {
+		compatible = "vatics,pico384";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <0>;
+		reset_gpio_num = <0xfff>;
+		standby_gpio_num = <0xFFF>;
+		sensor_i2c_bus_num = <1>;
+		sensor_i2c_addr = <0x26>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		clock_si5351_enable = <0>;
+		si5351_i2c_bus_num = <0>;
+		si5351_i2c_addr = <0xC0>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+PICO640_0:PICO640@0 {
+		compatible = "vatics,pico640";
+		data_io_num = <0>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <1>;
+		ref_clock_hz = <19100000>; /*60FPS : 38200000 HZ, 30FPS : 19100000 HZ*/
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		sensor_i2c_bus_num = <1>;
+		sensor_i2c_addr = <0x26>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		dac_dac7564_enable = <1>;
+		dac7564_spi_bus_num = <1>;
+		dac_VRefH = <0xFFFFFFFF>;
+		dac_VRefL = <0xFFFFFFFF>;
+		dac_VBUS = <0x0005C3A0>;
+		dac_VGSK = <0x00033414>;
+		dac_VGFID = <0x0004EDA4>;
+		dac_Offset = <0x00043FBC>;
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+TW2866_1:TW2866@1 {
+		compatible = "vatics,tw2866";
+		data_io_num = <1>; /*DVP0=0, DVP1=1, DVP2=2, DVP3=3, MIPI0=4, MIPI1=5, LVDS0=6, LVDS1=7*/
+		ref_clock_from_soc = <0>;
+		reset_gpio_num = <0xFFF>;
+		standby_gpio_num = <0xFFF>;
+		i2c_bus_num = <1>;
+		i2c_addr = <0x50>;
+		frame_sync_mode = <0>;
+		frame_sync_signal_num = <0xFFF>;
+		io_voltage = <3300000>; /*3300000, 2500000, 1800000*/
+		clocks = <&clks CLK_VIC_O_REF>;
+		clock-names = "vic_o_ref_clk";
+	};
+};
