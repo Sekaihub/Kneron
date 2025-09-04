@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Starting network by using u-boot environment variable settings
+#
+start() {
+	echo "Starting network by U-Boot settings2:"
+
+	ip_nets=$(fw_printenv -l /tmp ipaddr gatewayip netmask ethaddr)
+
+	for ipinfo in $ip_nets
+	do
+		eval $ipinfo
+	done
+
+	/sbin/ifconfig eth0 hw ether $ethaddr
+	/sbin/ifconfig eth0 $ipaddr
+	/sbin/ifconfig lo 127.0.0.1
+	/sbin/route add default gw $gatewayip
+}
+
+case "$1" in
+ 	start)
+		start
+		;;
+	*)
+		;;
+esac
