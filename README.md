@@ -81,8 +81,11 @@ Your SDK should look like this after extraction:
 ```
 .
 ├── Knneron/
-│   ├── Buildroot/            # Rootfs & toolchain build system
 │   ├── Toolchain、           # Prebuilt toolchain + env setup script
+│   ├── U-Boot/               # U-Boot bootloader
+│   ├── Kernel/               # Linux kernel sources
+│   ├── Buildroot/            # Rootfs & toolchain build system
+│   └── SignTool/             # Image signing utility
 ```
 
 ---
@@ -99,13 +102,62 @@ aarch64-linux-gcc --version   # Test the toolchain
 
 Then use the helper script:  
 ```bash
-source Toolchain/devel_leipzig
+source Toolchain/devel_leipzig   # Needed for rest of the steps
 ```
 ---
 
-## 4. Build Components  
+## 4. Build Trusted Firmware-A (TF-A)
 
-### 4.1 Rootfs  
+The **Trusted Firmware-A (TF-A)** provides the EL3 runtime firmware (e.g., `bl31.bin`) that initializes the SoC and hands off control to U-Boot.  
+Using the following command to compile BL31:
+
+```bash
+cd TF-A
+make distclean
+make PLAT=wagner DEBUG=0 bl31
+```
+
+Output:  
+```
+build/leipzig/release/bl31/bl31.bin
+```
+
+---
+
+## 5. Build U-Boot  
+
+```bash
+cd U-Boot
+make distclean
+make leipzig_defconfig
+make 
+```
+
+Output: `u-boot.bin`  
+
+---
+
+## 6. Build Kernel + DTB  
+
+```bash
+cd Kernel
+make clean
+make menuconfig   # add/remove kernel modules
+make leipzig_defconfig
+make
+
+# Just to build device tree
+make dtbs
+```
+
+Output:  
+- Kernel: `arch/arm64/boot/Image`  
+- Device Trees: `arch/arm64/boot/dts/*.dtb`  
+
+---
+
+## 7. Build Rootfs  
+
 ```bash
 cd Buildroot
 make clean
@@ -113,8 +165,7 @@ make leipzig_rootfs_defconfig
 make menuconfig   # add/remove packages
 make target-post-image
 ```
-Result: `output/images/rootfs.squashfs`  
+
+Output: `output/images/rootfs.squashfs`  
 
 ---
-
-
