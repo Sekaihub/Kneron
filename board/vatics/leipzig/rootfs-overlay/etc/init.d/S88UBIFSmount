@@ -1,6 +1,0 @@
-#! /bin/sh
-
-ubiattach /dev/ubi_ctrl -m 5 > /dev/null 2>&1
-eval volume_size=`ubinfo /dev/ubi0 |awk '/Amount of available logical eraseblocks/ {printf "%d ",$9}'` > /dev/null 2>&1
-ubimkvol /dev/ubi0 -s ${volume_size}MiB -N ubi0_0 > /dev/null 2>&1
-mount -t ubifs ubi0:ubi0_0 /mnt/flash
