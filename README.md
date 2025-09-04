@@ -86,6 +86,7 @@ Your SDK should look like this after extraction:
 │   ├── Kernel/               # Linux kernel sources
 │   ├── Buildroot/            # Rootfs & toolchain build system
 │   └── SignTool/             # Image signing utility
+└── README                    # Instructions
 ```
 
 ---
